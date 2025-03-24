@@ -4,8 +4,6 @@ from .loan import Loan
 
 class StudentLoan(Loan):
 
-    annual_interest_rate = 0.07
-
     def __init__(self):
         super().__init__(0.07, 61_415)
         self._current_date = datetime.now()

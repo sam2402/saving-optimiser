@@ -15,16 +15,15 @@ def simulate_finances(investment_matrix: InvestmentMatrix):
         portfolio.pass_month(available_income_for_month)
         net_worth_by_month.append(portfolio.net_worth)
     
-    print(portfolio._investment_matrix._weightings)
     print(net_worth_by_month[-1])
 
 
 if __name__ == "__main__":
     investment_matrix = InvestmentMatrix({
         month_index: {
-            "Pension": 1,
-            "Savings": 1,
-            "Student Loan": 10
+            "Pension": 0,
+            "Savings": 3,
+            "Student Loan": 1
         } for month_index in range(12*30)
     })
     simulate_finances(investment_matrix) 

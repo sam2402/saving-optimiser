@@ -12,7 +12,6 @@ class Loan(Vehicle, ABC):
         Pay off the outstanding balance by `amount`\n
         Raises `LoanTerminatedException` if `amount` is greater than the outstanding balance
         """
-        print(amount, self._current_value)
         if amount > abs(self._current_value):
             self._current_value = 0
             amount_leftover = amount-abs(self._current_value)
