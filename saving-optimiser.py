@@ -12,6 +12,7 @@ def simulate_finances(investment_matrix: InvestmentMatrix):
 
     for month_index in range(investment_matrix.month_count):
         available_income_for_month = get_monthly_available_money(month_index)
+        print(available_income_for_month)
         portfolio.pass_month(available_income_for_month)
         net_worth_by_month.append(portfolio.net_worth)
     
@@ -26,4 +27,5 @@ if __name__ == "__main__":
             "Student Loan": 1
         } for month_index in range(12*30)
     })
-    simulate_finances(investment_matrix) 
+    simulate_finances(investment_matrix)
+    
