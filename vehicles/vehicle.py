@@ -16,3 +16,6 @@ class Vehicle(ABC):
 
     def pass_month(self):
         self._current_value *= (1+self._annual_interest_rate)**(1/12)
+    
+    def __repr__(self):
+        return f"{self.__class__.__name__}: {self.current_value}"
