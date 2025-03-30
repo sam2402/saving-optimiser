@@ -17,5 +17,11 @@ class Vehicle(ABC):
     def pass_month(self):
         self._current_value *= (1+self._annual_interest_rate)**(1/12)
     
+    def get_obligatory_pre_tax_payment(self, gross_monthly_income: int) -> int:
+        """
+        Get the amount you would have to pay into this vehicle if you make `gross_monthly_income` in the current month
+        """
+        return 0
+
     def __repr__(self):
         return f"{self.__class__.__name__}: {self.current_value}"

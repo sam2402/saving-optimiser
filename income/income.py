@@ -1,7 +1,6 @@
 from constants import INTEREST_RATE
 from portfolio import Portfolio
 import time_tracker
-from vehicles.student_loan import StudentLoan
 
 class Income:
 
@@ -10,15 +9,12 @@ class Income:
 
     def pass_month(self) -> int:
         gross_monthly_income = Salary.get_current_gross_monthly_income()
-        compulsory_student_loan_payment = StudentLoan.get_obligatory_payment_amount_from_gross_monthly_income(gross_monthly_income)
-        gross_monthly_income_after_compulsory_student_loan_payment = gross_monthly_income-compulsory_student_loan_payment
-        self._portfolio.pay_into_vehicle("Student Loan", compulsory_student_loan_payment)
-        # self._portfolio.get_pension_payment(gross_monthly_income_after_compulsory_student_loan_payment)
+        gross_monthly_income_after_compulsory_pre_tax_payments = self._portfolio.make_obligatory_pre_tax_payments(gross_monthly_income)
         return gross_monthly_income * (15_000/90_000)
         
         # get gross income for month - Done
         # pay student loan - Done
-        # get gross income minus student loan
+        # get gross income minus student loan - Done
         # make pension payment
         # get net income
         # pay rent / mortgage

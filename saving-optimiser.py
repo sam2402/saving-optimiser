@@ -15,14 +15,13 @@ def simulate_finances(investment_matrix: InvestmentMatrix):
     income = Income(portfolio)
 
     while time_tracker.current_month_index < YEARS*12:
-        print(str(portfolio))
+        if time_tracker.current_month_index%12 == 0: print(time_tracker.current_year_index(), str(portfolio))
         remaining_income_form_month = income.pass_month()
         portfolio.pass_month(remaining_income_form_month)
         net_worth_by_month.append(portfolio.net_worth)
         time_tracker.pass_month()
     
-    print(net_worth_by_month[::12])
-    # print(investment_matrix._weightings)
+    print(f"Net worth in {YEARS} years {net_worth_by_month[-1]}")
 
 
 if __name__ == "__main__":
@@ -30,7 +29,7 @@ if __name__ == "__main__":
         month_index: {
             "Pension": 0,
             "Savings": 1,
-            "Student Loan": 0
+            "Student Loan": 1
         } for month_index in range(12*YEARS)
     })
     simulate_finances(investment_matrix)

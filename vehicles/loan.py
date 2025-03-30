@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import override
 from .vehicle import Vehicle
 
 
@@ -7,6 +8,7 @@ class Loan(Vehicle, ABC):
     def __init__(self, annual_interest_rate: float, principle: int):
         super().__init__(annual_interest_rate, -principle)
 
+    @override
     def invest(self, amount: int):
         """
         Pay off the outstanding balance by `amount`\n
