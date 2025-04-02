@@ -1,2 +1,23 @@
-INTEREST_RATE = 0.025
-DAYS_IN_MONTH = 365.25/12
+from datetime import datetime
+
+def fmt(num: float) -> str:
+    return f"{round(num):,}"
+
+DAYS_IN_YEAR = 365.25
+DAYS_IN_MONTH = DAYS_IN_YEAR/12
+
+CURRENT_STUDENT_LOAN_MONTHLY_THRESHOLD = 2274
+
+# Input
+INTEREST_RATE = 0.03
+INFLATION_RATE = 0.03
+DATE_OF_BIRTH = datetime(day=24, month=2, year=2002)
+STARTING_SALARY = 92000
+STUDENT_LOAN_PRINCIPLE = 61_415
+STARTING_CASH = 14_800
+SIMULATION_YEARS = 30
+EMPLOYER_PENSION_MATCH = 0.08
+INVESTMENT_RETURN_RATE = 0.07
+GRADUATION_DATE = datetime(day=1, month=6, year=2024)
+SAVING_RATIO = 0.15 # What percentage of your gross income do you save
+YEARLY_SALARY_INCREASE = 7000

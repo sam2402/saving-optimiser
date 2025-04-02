@@ -1,3 +1,4 @@
+from constants import fmt
 from investment_matrix import InvestmentMatrix
 from vehicles.loan import LoanTerminatedException
 from vehicles.vehicle import Vehicle
@@ -26,7 +27,7 @@ class Portfolio:
         """
         Pay into the each vehicle the amount you have to based on your gross income
         This is probably just the student loan
-        Return the amount of `gross_monthly_income` left after this payment
+        Return the total amount paid in obligatory pre tax payments
         """
         total_pre_tax_payment = 0
         for vehicle_name, vehicle in self._vehicles.items():
@@ -34,8 +35,7 @@ class Portfolio:
             leftover_amount = self._pay_into_vehicle(vehicle_name, obligatory_payment)
             actual_payment = obligatory_payment-leftover_amount
             total_pre_tax_payment += actual_payment
-       
-        return gross_monthly_income - total_pre_tax_payment
+        return total_pre_tax_payment
 
     def _invest(self, amount: int):
         leftover_money = 0
@@ -65,7 +65,7 @@ class Portfolio:
             vehicle.pass_month()
     
     def __repr__(self):
-        return ", ".join(str(vehicle) for vehicle in self.vehicles) + f", Net worth: {self.net_worth}"
+        return "\t".join(str(vehicle) for vehicle in self.vehicles) + f"\t\tNet worth: £{fmt(self.net_worth)}"
 
 class SimulationBoundsExceededException(Exception):
     pass

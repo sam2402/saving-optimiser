@@ -1,4 +1,4 @@
-from constants import INTEREST_RATE
+from constants import INFLATION_RATE, STARTING_SALARY, SAVING_RATIO, YEARLY_SALARY_INCREASE
 from portfolio import Portfolio
 import time_tracker
 
@@ -9,8 +9,8 @@ class Income:
 
     def pass_month(self) -> int:
         gross_monthly_income = Salary.get_current_gross_monthly_income()
-        gross_monthly_income_after_compulsory_pre_tax_payments = self._portfolio.make_obligatory_pre_tax_payments(gross_monthly_income)
-        return gross_monthly_income * (15_000/90_000)
+        compulsory_pre_tax_payments = self._portfolio.make_obligatory_pre_tax_payments(gross_monthly_income)
+        return (gross_monthly_income-compulsory_pre_tax_payments) * SAVING_RATIO
         
         # get gross income for month - Done
         # pay student loan - Done
@@ -24,7 +24,7 @@ class Income:
     
 class Salary:
 
-    starting_salary = 90_000
+    starting_salary = STARTING_SALARY
 
     @staticmethod
     def get_current_gross_monthly_income() -> int:
@@ -32,4 +32,4 @@ class Salary:
 
     @staticmethod
     def _get_current_gross_yearly_income() -> int:
-        return (Salary.starting_salary * ((1+INTEREST_RATE)**time_tracker.current_year_index())) + (7000*time_tracker.current_year_index())
+        return (Salary.starting_salary * ((1+INFLATION_RATE)**time_tracker.current_year_index())) + (YEARLY_SALARY_INCREASE*time_tracker.current_year_index())

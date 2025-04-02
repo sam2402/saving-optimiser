@@ -1,4 +1,5 @@
-from income.income import Income
+from constants import EMPLOYER_PENSION_MATCH, GRADUATION_DATE, INFLATION_RATE, INTEREST_RATE, INVESTMENT_RETURN_RATE, STARTING_CASH, SIMULATION_YEARS, STUDENT_LOAN_PRINCIPLE, fmt
+from income.income import Income, Salary
 from portfolio import Portfolio
 from investment_matrix import InvestmentMatrix
 import time_tracker
@@ -6,31 +7,34 @@ from vehicles.pension import Pension
 from vehicles.savings import Savings
 from vehicles.student_loan import StudentLoan
 
-YEARS = 30
-
 def simulate_finances(investment_matrix: InvestmentMatrix):
     net_worth_by_month = []
-    starting_cash = 13_500
-    portfolio = Portfolio(investment_matrix, {"Pension": Pension(), "Savings": Savings(), "Student Loan": StudentLoan()}, starting_cash)
+    portfolio = Portfolio(investment_matrix, {
+        "Pension": Pension(INVESTMENT_RETURN_RATE, EMPLOYER_PENSION_MATCH),
+        "Savings": Savings(INVESTMENT_RETURN_RATE),
+        "Student Loan": StudentLoan(INTEREST_RATE, STUDENT_LOAN_PRINCIPLE, GRADUATION_DATE)
+    }, STARTING_CASH)
     income = Income(portfolio)
 
-    while time_tracker.current_month_index < YEARS*12:
-        if time_tracker.current_month_index%12 == 0: print(time_tracker.current_year_index(), str(portfolio))
-        remaining_income_form_month = income.pass_month()
-        portfolio.pass_month(remaining_income_form_month)
+    while time_tracker.current_month_index < SIMULATION_YEARS*12:
+        if time_tracker.current_month_index%12 == 0: 
+            print(f"Year {time_tracker.current_year_index()}: Salary: £{fmt(Salary._get_current_gross_yearly_income())}\t{str(portfolio)}")
+        remaining_income_from_month = income.pass_month()
+        portfolio.pass_month(remaining_income_from_month)
         net_worth_by_month.append(portfolio.net_worth)
         time_tracker.pass_month()
     
-    print(f"Net worth in {YEARS} years {net_worth_by_month[-1]}")
-
+    print(f"Net worth in {SIMULATION_YEARS} years: £{fmt(net_worth_by_month[-1])}")
+    inflation_adjusted_net_worth = net_worth_by_month[-1] / (1+INFLATION_RATE)**SIMULATION_YEARS
+    print(f"Inflation adjusted net worth: £{fmt(inflation_adjusted_net_worth)}")
 
 if __name__ == "__main__":
     investment_matrix = InvestmentMatrix({
         month_index: {
-            "Pension": 0,
-            "Savings": 1,
-            "Student Loan": 1
-        } for month_index in range(12*YEARS)
+            "Pension": 1,
+            "Savings": 0,
+            "Student Loan": 0
+        } for month_index in range(12*SIMULATION_YEARS)
     })
     simulate_finances(investment_matrix)
     

@@ -1,4 +1,5 @@
 from abc import ABC
+from constants import fmt
 
 
 class Vehicle(ABC):
@@ -24,4 +25,4 @@ class Vehicle(ABC):
         return 0
 
     def __repr__(self):
-        return f"{self.__class__.__name__}: {self.current_value}"
+        return f"{self.__class__.__name__}: £{fmt(self.current_value)}"
