@@ -18,7 +18,7 @@ def simulate_finances(investment_matrix: InvestmentMatrix):
 
     while time_tracker.current_month_index < SIMULATION_YEARS*12:
         if time_tracker.current_month_index%12 == 0: 
-            print(f"Year {time_tracker.current_year_index()}: Salary: £{fmt(Salary._get_current_gross_yearly_income())}\t{str(portfolio)}")
+            print(f"Year {time_tracker.current_year_index()}: Salary: £{fmt(Salary._get_current_gross_yearly_income()/((1+INFLATION_RATE)**time_tracker.current_year_index()))}\t{str(portfolio)}")
         remaining_income_from_month = income.pass_month()
         portfolio.pass_month(remaining_income_from_month)
         net_worth_by_month.append(portfolio.net_worth)
