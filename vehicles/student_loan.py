@@ -12,6 +12,7 @@ class StudentLoan(Loan):
 
     initial_monthly_threshold = CURRENT_STUDENT_LOAN_MONTHLY_THRESHOLD
     cancellation_period = timedelta(days=DAYS_IN_YEAR*30)
+    minimum_payment_coefficient = 0.09
 
     @staticmethod
     def april_after_graduation(date: datetime) -> datetime:
@@ -30,5 +31,5 @@ class StudentLoan(Loan):
     
     @override
     def get_obligatory_pre_tax_payment(self, gross_monthly_income: int) -> int:
-        current_monthly_threshold = StudentLoan.initial_monthly_threshold*(1+INFLATION_RATE**time_tracker.current_year_index())
-        return (gross_monthly_income-current_monthly_threshold)*0.09
+        current_monthly_threshold = self.initial_monthly_threshold*(1+INFLATION_RATE**time_tracker.current_year_index())
+        return (gross_monthly_income-current_monthly_threshold)*self.minimum_payment_coefficient
