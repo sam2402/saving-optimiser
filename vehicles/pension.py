@@ -1,11 +1,12 @@
 from typing import override
+from compounding import Compounding
 from income.income import Salary
 from .vehicle import Vehicle
 
 class Pension(Vehicle):
 
-    def __init__(self, annual_interest_rate: float, employer_match: float):
-        super().__init__(annual_interest_rate)
+    def __init__(self, rate: Compounding, employer_match: float, current_value: float):
+        super().__init__(rate, current_value)
         self._employer_match = employer_match
     
     @override

@@ -1,15 +1,16 @@
 from abc import ABC
 from typing import override
+from compounding import Compounding
 from .vehicle import Vehicle
 
 
 class Loan(Vehicle, ABC):
 
-    def __init__(self, annual_interest_rate: float, principle: int):
-        super().__init__(annual_interest_rate, -principle)
+    def __init__(self, rate: Compounding, principle: float):
+        super().__init__(rate, -principle)
 
     @override
-    def invest(self, amount: int):
+    def invest(self, amount: float):
         """
         Pay off the outstanding balance by `amount`\n
         Raises `LoanTerminatedException` if `amount` is greater than the outstanding balance
@@ -23,6 +24,6 @@ class Loan(Vehicle, ABC):
     
 class LoanTerminatedException(Exception):
 
-    def __init__(self, remaining_amount: int, *args):
+    def __init__(self, remaining_amount: float, *args):
         super().__init__(*args)
         self.remaining = remaining_amount

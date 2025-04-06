@@ -12,4 +12,4 @@ def pass_month():
     current_date += timedelta(days=DAYS_IN_MONTH)
 
 def current_year_index():
-    return current_month_index//12 
+    return current_month_index//12
